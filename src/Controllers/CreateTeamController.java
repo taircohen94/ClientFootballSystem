@@ -9,14 +9,12 @@ import javafx.scene.control.TextField;
 
 public class CreateTeamController extends Controller {
 
-    public RequiredField requiredField1;
     public RequiredField requiredField2;
     public RequiredField requiredField3;
     public RequiredField requiredField4;
     public RequiredField requiredField5;
     public RequiredField requiredField6;
 
-    public TextField teamID;
     public TextField teamName;
     public TextField teamBudget;
     public ComboBox cmbLeagueType2;
@@ -26,13 +24,12 @@ public class CreateTeamController extends Controller {
 
     @FXML
     public void clickOnCreateTeam(ActionEvent e) {
-        requiredField1.eval();
         requiredField2.eval();
         requiredField3.eval();
         requiredField4.eval();
         requiredField5.eval();
         requiredField6.eval();
-        if (!requiredField1.getHasErrors() && !requiredField2.getHasErrors() && !requiredField3.getHasErrors() &&
+        if ( !requiredField2.getHasErrors() && !requiredField3.getHasErrors() &&
                 !requiredField4.getHasErrors() && !requiredField5.getHasErrors() && !requiredField6.getHasErrors()) {
             String ans = client.createTeam(teamName.getText(), cmbLeagueType2.getValue().toString(),
                     cmbSeasonType21.getValue().toString(), cmbFieldType.getValue().toString());
