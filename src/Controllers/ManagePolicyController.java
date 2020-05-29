@@ -16,8 +16,7 @@ public class ManagePolicyController extends Controller{
 
     public TextField leagueName;
     public TextField season;
-    public TextField leagueName2;
-    public TextField season2;
+
 
     @FXML
     public void clickOnAssignGamePolicy(ActionEvent e) {
