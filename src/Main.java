@@ -24,6 +24,7 @@ public class Main extends Application {
         root.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
         stage.setTitle("Football Association System");
         stage.setScene(new Scene(root, 900, 900));
+        stage.setHeight(650);
         stage.show();
         Controller controller = new Controller();
         controller.setClient(connectToServer());
