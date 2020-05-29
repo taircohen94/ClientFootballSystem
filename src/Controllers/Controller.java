@@ -44,24 +44,19 @@ public class Controller {
     }
 
     public void initGameIdCB(ComboBox comboBox){
-//        GameDB gameDB = FootballSystem.getInstance().getGameDB();
-//        if(gameDB != null){
-//            HashMap<Integer, Game> gameHashMap = gameDB.getAllGames();
-//            if(gameHashMap != null && gameHashMap.size() > 0){
-//                Set<Integer> gameSet = gameHashMap.keySet();
-//                for (Integer gameName : gameSet){
-//                    comboBox.getItems().add(gameName);
-//                }
-//            }
-//            else{
-//                raiseAlert(new RecordException("There is not games at the DB"));
-//            }
-//        }
-//        else{
-//            raiseAlert(new RecordException("games DB is not exits"));
-//        }
-//    }
-
+        String ans = client.getGameIds();
+        String[] array;
+        if (ans != null) {
+            array = ans.split(",");
+            if (array[0].equals("Ok")) {
+                for (int i = 1; i < array.length; i++) {
+                    comboBox.getItems().add(array[i]);                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(ans);
+                alert.showAndWait();
+            }
+        }
     }
 
     public void setClient(Client connectToServer) {
