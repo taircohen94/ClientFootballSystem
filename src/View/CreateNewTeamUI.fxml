@@ -41,11 +41,6 @@
                         <Font name="Calibri" size="16.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="teamID" alignment="TOP_LEFT" layoutX="692.0" layoutY="36.0" prefHeight="31.0" prefWidth="177.0" promptText="Enter Team ID">
-                     <font>
-                        <Font name="Calibri" size="16.0" />
-                     </font>
-                  </TextField>
                   <ComboBox fx:id="cmbSeasonType21" layoutX="694.0" layoutY="102.0" prefHeight="25.0" prefWidth="174.0" promptText="season" styleClass="combo-box" />
                   <Text fill="WHITE" layoutX="694.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select  a season">
                      <font>
@@ -73,11 +68,7 @@
 
 
          <fx:define>
-            <RequiredField fx:id="requiredField1" >
-               <srcControl>
-                  <fx:reference source="teamID"/>
-               </srcControl>
-            </RequiredField>
+
             <RequiredField fx:id="requiredField2" >
                <srcControl>
                   <fx:reference source="teamName"/>
@@ -107,11 +98,6 @@
             </RequiredField>
 
          </fx:define>
-         <ErrorLabel layoutX="710.0" layoutY="200.0" message="Please enter the ID" styleClass="first-error">
-            <validator>
-               <fx:reference source="requiredField1"/>
-            </validator>
-         </ErrorLabel>
          <ErrorLabel layoutX="520.0" layoutY="200.0" message="Please select a team" styleClass="first-error">
             <validator>
                <fx:reference source="requiredField2"/>
