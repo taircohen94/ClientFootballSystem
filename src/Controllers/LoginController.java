@@ -8,11 +8,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
 
-public class LoginController extends Controller implements Observer {
+import java.io.IOException;
+
+public class LoginController extends Controller {
 
 
     @FXML
@@ -22,7 +21,7 @@ public class LoginController extends Controller implements Observer {
     public RequiredField requiredField2;
     public Button loginBtn;
     static final String STYLE_SHEET = "../View/common-styles.css";
-
+    MainPageController controller;
 
     public LoginController() {
 
@@ -34,47 +33,47 @@ public class LoginController extends Controller implements Observer {
         requiredField2.eval();
         if (!requiredField1.getHasErrors() && !requiredField2.getHasErrors()) {
             String ans = client.login(txtUserName.getText(), txtPassword.getText());
-            if(ans != null && ans.equals("Ok")){
-                showMainPage();
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(ans);
-                alert.showAndWait();
+            String[] array;
+            if (ans != null) {
+                array = ans.split(",");
+                if (array[0].equals("Ok")) {
+                    showMainPage(array[1]);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText(ans);
+                    alert.showAndWait();
+                }
             }
         }
     }
 
-    private void showMainPage() {
-        Parent newRoot = null;
-        try {
-            newRoot = FXMLLoader.load(getClass().getResource("../View/MainPageUI.fxml"));
-            newRoot.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
-        primaryStage.getScene().setRoot(newRoot);
-        primaryStage.setResizable(true);
-        primaryStage.setMinWidth(700);
-        primaryStage.setMinHeight(450);
-        primaryStage.setTitle("Football Association System");
+//    private void showMainPage(String fanByUserName) {
+//        Parent newRoot = null;
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainPageUI.fxml"));
+//            newRoot = FXMLLoader.load(getClass().getResource("../View/MainPageUI.fxml"));
+//            newRoot.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
+//            controller = loader.getController();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
+//        primaryStage.getScene().setRoot(newRoot);
+//        primaryStage.setResizable(true);
+//        primaryStage.setMinWidth(700);
+//        primaryStage.setMinHeight(450);
+//        primaryStage.setTitle("Football Association System");
+//        controller.init(fanByUserName);
+//    }
+
+    private void showMainPage(String fanByUserName) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainPageUI.fxml"));
+        Stage stage = getStage(loader, loginBtn);
+        stage.setTitle("Football Association System");
+        controller = loader.getController();
+        controller.init(fanByUserName);
+        // showAndWait will block execution until the window closes...
+        stage.showAndWait();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-//        if(o.equals(model)){
-////            ArrayList<String> notifications =  ((RepresentativeFootballAssociation) arg).getNotificationTeams();
-////            for (String req : notifications){
-////                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-////                a.setContentText(req);
-////                Optional<ButtonType> option = a.showAndWait();
-////                if(ButtonType.OK.equals(option.get())){
-////                    // TODO: 5/26/2020 send notifications to the relevent and create team
-////                }
-////                ((RepresentativeFootballAssociation)arg).removeNotifications();
-////
-////            }
-////        }
-    }
 }

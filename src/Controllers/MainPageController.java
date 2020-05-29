@@ -47,4 +47,33 @@ public class MainPageController extends Controller{
     }
 
 
+    public void init(String fanByUserName){
+        if (fanByUserName.equals("Coach")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("Player")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("Referee")) {
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("RepresentativeFootballAssociation")) {
+            manageGameBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("SystemManager")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("TeamManager")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
+        } else if (fanByUserName.equals("TeamOwner")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+        }
+    }
+
 }
