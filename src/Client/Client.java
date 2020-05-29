@@ -280,4 +280,84 @@ public class Client {
         }
         return ans;
     }
+
+    public String exportGameReport(int gameID, String absolutePath, String fileName) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("exportGameReport,");
+            req.append(gameID);
+            req.append(",");
+            req.append(absolutePath);
+            req.append(",");
+            req.append(fileName);
+            req.append(",");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String addEvent(int gameID, String eventType, String description) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("addEvent,");
+            req.append(gameID);
+            req.append(",");
+            req.append(eventType);
+            req.append(",");
+            req.append(description);
+            req.append(",");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String defineGameSchedulingPolicy(String policy, String league, String season) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("defineGameSchedulingPolicy,");
+            req.append(policy);
+            req.append(",");
+            req.append(league);
+            req.append(",");
+            req.append(season);
+            req.append(",");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String defineScoreTablePolicy(String policy, String league, String season) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("defineScoreTablePolicy,");
+            req.append(policy);
+            req.append(",");
+            req.append(league);
+            req.append(",");
+            req.append(season);
+            req.append(",");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
 }

@@ -2,14 +2,13 @@ package Controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
-import java.util.HashMap;
-import java.util.Set;
 
 public class ManageGameController extends Controller {
 
@@ -43,12 +42,22 @@ public class ManageGameController extends Controller {
                 //update the file chooser directory to user selected so the choice is "remembered"
                 fileChooser.setInitialDirectory(dir);
                 //handle saving data to disk or DB etc.
-//                int gameID = Integer.parseInt(this.cmbGameIDType.getValue().toString());
-//                try {
-//                    model.exportGameReport(gameID, file.getAbsolutePath(), file.getName());
-//                } catch (RecordException e) {
-//                    raiseAlert(e);
-//                }
+                int gameID = Integer.parseInt(this.cmbGameIDType.getValue().toString());
+                String ans = client.exportGameReport(gameID, file.getAbsolutePath(), file.getName());
+                String[] array;
+                if (ans != null) {
+                    array = ans.split(",");
+                    if (array[0].equals("Ok")) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setContentText("The game report exported successfully!");
+                        alert.showAndWait();
+                    }
+                    else{
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText(ans);
+                        alert.showAndWait();
+                    }
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -66,7 +75,6 @@ public class ManageGameController extends Controller {
         stage.showAndWait();
     }
 
-
     @FXML
     public void removeEvent() {
         stillWorkingOnIt();
@@ -77,7 +85,7 @@ public class ManageGameController extends Controller {
         stillWorkingOnIt();
     }
 
-    public void init(){
+    public void init() {
         // init game DB
         initGameIdCB(this.cmbGameIDType);
     }
