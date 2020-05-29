@@ -91,7 +91,7 @@ public class ManagePolicyController extends Controller {
                 alert.showAndWait();
             }
         }
-    }
+
 
 }
 
