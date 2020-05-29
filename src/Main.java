@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 
 public class Main extends Application {
     static final String RESOURCE = "View/Login2.fxml";
-    static final String STYLE_SHEET = "View/style.css";
+    static final String STYLE_SHEET = "View/common-styles.css";
     static Stage stg;
 
     @Override
@@ -24,6 +24,7 @@ public class Main extends Application {
         root.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
         stage.setTitle("Football Association System");
         stage.setScene(new Scene(root, 900, 900));
+        stage.setHeight(650);
         stage.show();
         Controller controller = new Controller();
         controller.setClient(connectToServer());
