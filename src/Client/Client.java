@@ -195,22 +195,69 @@ public class Client {
         String ans = null;
         try {
             Socket theServer = new Socket(serverIP, serverPort);
-            StringBuilder req = new StringBuilder();
-            req.append("editCoachDetails,");
-            req.append(",");
-            req.append(teamName);
-            req.append(",");
-            req.append(seasonYear);
-            req.append(",");
-            req.append(coachUserName);
-            req.append(",");
-            req.append(coachFirstName);
-            req.append(",");
-            req.append(coachLastName);
+            StringBuilder req = getStringBuilder(teamName, seasonYear, coachUserName, coachFirstName, coachLastName, "editCoachDetails,");
             req.append(",");
             req.append(training);
             req.append(",");
             req.append(role);
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String editTeamManagerDetails(String teamName, String seasonYear, String teamManagerUserName, String teamManagerFirstName, String teamManagerLastName) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = getStringBuilder(teamName, seasonYear, teamManagerUserName, teamManagerFirstName, teamManagerLastName, "editTeamManagerDetails,");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    private StringBuilder getStringBuilder(String teamName, String seasonYear, String teamPropUserName, String teamPropFirstName, String teamPropLastName, String s) {
+        StringBuilder req = new StringBuilder();
+        req.append(s);
+        req.append(",");
+        req.append(teamName);
+        req.append(",");
+        req.append(seasonYear);
+        req.append(",");
+        req.append(teamPropUserName);
+        req.append(",");
+        req.append(teamPropFirstName);
+        req.append(",");
+        req.append(teamPropLastName);
+        return req;
+    }
+
+    public String editPlayerDetails(String teamName, String seasonYear, String playerUserName, String playerFirstName, String playerLastName, String role) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = getStringBuilder(teamName, seasonYear, playerUserName, playerFirstName, playerLastName, "editPlayerDetails,");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String editFieldDetails(String teamName, String seasonYear, String fieldName, String city, String capacity) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = getStringBuilder(teamName, seasonYear, fieldName, city, capacity, "editFieldDetails,");
             clientStrategy.setRequest(req);
             ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
             theServer.close();

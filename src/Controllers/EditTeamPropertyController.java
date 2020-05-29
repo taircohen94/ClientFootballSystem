@@ -240,20 +240,7 @@ public class EditTeamPropertyController extends Controller {
         }
         String ans = client.editCoachDetails(teamName, seasonYear, coachUserNameCB.getValue().toString(), coachFirstName.getText(),
                 coachLastName.getText(), training, role);
-        String[] array;
-        if (ans != null) {
-            array = ans.split(",");
-            if (array[0].equals("Ok")) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("The details has been saved successfully!");
-                alert.showAndWait();
-            }
-            else{
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(ans);
-                alert.showAndWait();
-            }
-        }
+        receivedFeedbackFromServer(ans);
         this.coachLastName.clear();
         this.coachFirstName.clear();
     }
@@ -264,35 +251,44 @@ public class EditTeamPropertyController extends Controller {
         if (requiredField2.getHasErrors()) {
             return;
         }
-//        try {
-//            model.editTeamManagerDetails(teamName,seasonYear,teamManagerUserNameCB.getValue().toString(),
-//                    teamManagerFirstName.getText(),
-//                    teamManagerLastName.getText());
-//        } catch (RecordException e) {
-//            raiseAlert(e);
-//        }
+        String ans = client.editTeamManagerDetails(teamName, seasonYear, teamManagerUserNameCB.getValue().toString(),
+                teamManagerFirstName.getText(),
+                teamManagerLastName.getText());
+        receivedFeedbackFromServer(ans);
         this.teamManagerFirstName.clear();
         this.teamManagerLastName.clear();
     }
 
+    private void receivedFeedbackFromServer(String ans) {
+        String[] array;
+        if (ans != null) {
+            array = ans.split(",");
+            if (array[0].equals("Ok")) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("The details has been saved successfully!");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(ans);
+                alert.showAndWait();
+            }
+        }
+    }
+
     @FXML
     public void savePlayer() {
-        // TODO: 5/24/2020 add birthday
         requiredField3.eval();
         if (requiredField3.getHasErrors()) {
             return;
         }
-//        try {
-//            String role = null;
-//            Object r = this.EPlayerRoleCB.getValue();
-//            if(r != null){
-//                role = r.toString();
-//            }
-////            model.editPlayerDetails(teamName,seasonYear,playerUserNameCB.getValue().toString(),playerFirstName.getText(),
-////                    playerLastName.getText(),role);
-//        } catch (RecordException e) {
-//            raiseAlert(e);
-//        }
+        String role = null;
+        Object r = this.EPlayerRoleCB.getValue();
+        if (r != null) {
+            role = r.toString();
+        }
+        String ans = client.editPlayerDetails(teamName,seasonYear,playerUserNameCB.getValue().toString(),playerFirstName.getText(),
+                    playerLastName.getText(),role);
+        receivedFeedbackFromServer(ans);
         this.playerFirstName.clear();
         this.playerLastName.clear();
     }
@@ -303,13 +299,9 @@ public class EditTeamPropertyController extends Controller {
         if (requiredField4.getHasErrors()) {
             return;
         }
-
-//        try {
-//            model.editFieldDetails(teamName,seasonYear,fieldNameCB.getValue().toString(),fieldCity.getText(),
-//                    fieldCapacity.getText());
-//        } catch (RecordException e) {
-//            raiseAlert(e);
-//        }
+        String ans = client.editFieldDetails(teamName,seasonYear,fieldNameCB.getValue().toString(),fieldCity.getText(),
+                    fieldCapacity.getText());
+        receivedFeedbackFromServer(ans);
         this.fieldCity.clear();
         this.fieldCapacity.clear();
     }
