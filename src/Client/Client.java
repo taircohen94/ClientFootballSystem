@@ -266,4 +266,18 @@ public class Client {
         }
         return ans;
     }
+
+    public String getGameIds() {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("getGameIds,");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
 }
