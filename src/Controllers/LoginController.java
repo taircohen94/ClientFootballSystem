@@ -47,50 +47,33 @@ public class LoginController extends Controller {
         }
     }
 
+//    private void showMainPage(String fanByUserName) {
+//        Parent newRoot = null;
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainPageUI.fxml"));
+//            newRoot = FXMLLoader.load(getClass().getResource("../View/MainPageUI.fxml"));
+//            newRoot.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
+//            controller = loader.getController();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
+//        primaryStage.getScene().setRoot(newRoot);
+//        primaryStage.setResizable(true);
+//        primaryStage.setMinWidth(700);
+//        primaryStage.setMinHeight(450);
+//        primaryStage.setTitle("Football Association System");
+//        controller.init(fanByUserName);
+//    }
+
     private void showMainPage(String fanByUserName) {
-        Parent newRoot = null;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainPageUI.fxml"));
-            newRoot = FXMLLoader.load(getClass().getResource("../View/MainPageUI.fxml"));
-            newRoot.getStylesheets().add(getClass().getResource(STYLE_SHEET).toExternalForm());
-            controller = loader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
-        primaryStage.getScene().setRoot(newRoot);
-        primaryStage.setResizable(true);
-        primaryStage.setMinWidth(700);
-        primaryStage.setMinHeight(450);
-        primaryStage.setTitle("Football Association System");
-        if (fanByUserName.equals("Coach")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.managePolicyBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("Player")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.managePolicyBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("Referee")) {
-            controller.managePolicyBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("RepresentativeFootballAssociation")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("SystemManager")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.managePolicyBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("TeamManager")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.managePolicyBtn.setDisable(true);
-            controller.manageTeamBtn.setDisable(true);
-        } else if (fanByUserName.equals("TeamOwner")) {
-            controller.manageGameBtn.setDisable(true);
-            controller.managePolicyBtn.setDisable(true);
-        }
-
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/MainPageUI.fxml"));
+        Stage stage = getStage(loader, loginBtn);
+        stage.setTitle("Football Association System");
+        controller = loader.getController();
+        controller.init(fanByUserName);
+        // showAndWait will block execution until the window closes...
+        stage.showAndWait();
     }
 
 }
