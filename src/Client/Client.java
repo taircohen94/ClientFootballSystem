@@ -360,4 +360,18 @@ public class Client {
         }
         return ans;
     }
+
+    public String checkNotification() {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("checkNotification,");
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
 }
