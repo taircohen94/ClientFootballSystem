@@ -368,6 +368,21 @@ public class Client {
             StringBuilder req = new StringBuilder("checkNotification,");
             clientStrategy.setRequest(req);
             ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            System.out.println(req.toString());
+            theServer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ans;
+    }
+
+    public String availableSeasonsForLeague(String toString) {
+        String ans = null;
+        try {
+            Socket theServer = new Socket(serverIP, serverPort);
+            StringBuilder req = new StringBuilder("availableSeasonsForLeague,"+toString);
+            clientStrategy.setRequest(req);
+            ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
             theServer.close();
         } catch (IOException e) {
             e.printStackTrace();
