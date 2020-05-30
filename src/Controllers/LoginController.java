@@ -98,7 +98,7 @@ public class LoginController extends Controller {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 1; i < notifications.length; i++) {
             stringBuilder.append(notifications[i]);
-            if(i % 3 == 0){
+            if(i % 4 == 0){
                 stringBuilder.append("\n");
             }
         }
