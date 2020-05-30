@@ -73,6 +73,10 @@ public class MainPageController extends Controller{
         } else if (fanByUserName.equals("TeamOwner")) {
             manageGameBtn.setDisable(true);
             managePolicyBtn.setDisable(true);
+        } else if (fanByUserName.equals("Fan")) {
+            manageGameBtn.setDisable(true);
+            managePolicyBtn.setDisable(true);
+            manageTeamBtn.setDisable(true);
         }
     }
 
