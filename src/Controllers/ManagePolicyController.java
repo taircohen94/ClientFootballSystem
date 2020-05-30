@@ -11,21 +11,23 @@ public class ManagePolicyController extends Controller {
 
     public RequiredField requiredField1;
     public RequiredField requiredField2;
-    public ChoiceBox policyChoiceBox;
-    public TextField leagueName;
-    public TextField season;
+    public RequiredField requiredField3;
     public ComboBox cmbLeagueType;
     public ComboBox cmbSeasonType;
+    public ComboBox cmbPolicyType;
 
     @FXML
     public void clickOnAssignGamePolicy(ActionEvent e) {
 
         requiredField1.eval();
         requiredField2.eval();
-        if (!requiredField1.getHasErrors() && !requiredField2.getHasErrors()) {
-            String policy = policyChoiceBox.getValue().toString();
+        requiredField3.eval();
+        if (!requiredField1.getHasErrors() && !requiredField2.getHasErrors() && !requiredField3.getHasErrors()) {
+            String policy = cmbPolicyType.getValue().toString();
+            String league = cmbLeagueType.getValue().toString();
+            String season = cmbSeasonType.getValue().toString();
             if (policy.equalsIgnoreCase("Regular Schedule Policy") || policy.equalsIgnoreCase("One Round Schedule Policy")) {
-                String ans = client.defineGameSchedulingPolicy(policy, leagueName.getText(), season.getText());
+                String ans = client.defineGameSchedulingPolicy(policy, league, season);
                 String[] array;
                 if (ans != null) {
                     array = ans.split(",");
@@ -40,7 +42,7 @@ public class ManagePolicyController extends Controller {
                     }
                 }
             } else {
-                String ans = client.defineScoreTablePolicy(policy, leagueName.getText(), season.getText());
+                String ans = client.defineScoreTablePolicy(policy, league, season);
                 String[] array;
                 if (ans != null) {
                     array = ans.split(",");
@@ -90,7 +92,11 @@ public class ManagePolicyController extends Controller {
                 alert.setContentText(ans);
                 alert.showAndWait();
             }
+
         }
+
     }
+
+
 }
 
