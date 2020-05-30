@@ -375,7 +375,7 @@ public class Client {
         }
         return ans;
     }
- 
+
     public String availableSeasonsForLeague(String toString) {
         String ans = null;
         try {
