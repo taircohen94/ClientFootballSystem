@@ -368,6 +368,7 @@ public class Client {
             StringBuilder req = new StringBuilder("checkNotification,");
             clientStrategy.setRequest(req);
             ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
+            System.out.println(req.toString());
             theServer.close();
         } catch (IOException e) {
             e.printStackTrace();

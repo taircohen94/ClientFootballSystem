@@ -32,19 +32,24 @@ public class Main extends Application {
     }
 
     private static Client connectToServer() {
-        Client client = null;
+        int x = 132;
+        byte y = (byte) x;
+        byte[] ipAddr = new byte[] { y, 72, 65 ,88 };
+
+        InetAddress addr = null;
         try {
-            client = new Client(
-                    InetAddress.getLocalHost(),
-                    5400,
-                    /*new ClientStrategyCLI()*/
-                    new ClientSender()
-                    /*new ClientSender()*/
-            );
-            client.start();
+            addr = InetAddress.getByAddress(ipAddr);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        Client client = null;
+        client = new Client(addr,
+                5400,
+                /*new ClientStrategyCLI()*/
+                new ClientSender()
+                /*new ClientSender()*/
+        );
+        client.start();
         return client;
     }
 

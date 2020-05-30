@@ -8,10 +8,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sun.awt.windows.ThemeReader;
 
 import java.io.IOException;
 
-public class LoginController extends Controller {
+public class LoginController extends Controller{
 
 
     @FXML
@@ -73,18 +74,34 @@ public class LoginController extends Controller {
         controller = loader.getController();
         controller.init(fanByUserName);
         // showAndWait will block execution until the window closes...
-        stage.showAndWait();
         start();
+        stage.showAndWait();
     }
 
-    public void start(){
-        new Thread(() -> {
-            notificationFromServer();
-        }).start();
+    private void start(){
+        Thread one = new Thread(() -> {
+            try {
+                while(true) {
+                    System.out.println("Does it work?");
+                    notificationFromServer();
+                    Thread.sleep(10000);
+                    System.out.println("Nope, it doesnt...again.");
+                }
+            } catch(InterruptedException v) {
+                System.out.println(v);
+            }
+        });
+        one.start();
+
+//        new Thread(() -> {
+//            notificationFromServer();
+//        }).start();
     }
 
     private void notificationFromServer() {
+        System.out.println("notificationFromServer");
         String ans = client.checkNotification();
+        System.out.println(ans);
         String[] array;
         if (ans != null) {
             array = ans.split(",");
@@ -92,7 +109,7 @@ public class LoginController extends Controller {
                 showNotification(array);
             }
         }
-}
+    }
 
     private void showNotification(String [] notifications) {
         StringBuilder stringBuilder = new StringBuilder();
