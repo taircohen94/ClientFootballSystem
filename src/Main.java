@@ -32,9 +32,11 @@ public class Main extends Application {
     }
 
     private static Client connectToServer() {
-        int x = 132;
+        int x = 139;
         byte y = (byte) x;
-        byte[] ipAddr = new byte[] { y, 72, 65 ,88 };
+        int z = 243;
+        byte t = (byte) z;
+        byte[] ipAddr = new byte[] { 77, y, 118 ,t };
 
         InetAddress addr = null;
         try {
@@ -42,11 +44,11 @@ public class Main extends Application {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        try {
-            addr = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            addr = InetAddress.getLocalHost();
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
         Client client = null;
         client = new Client(addr,
                 5400,
