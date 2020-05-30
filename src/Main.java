@@ -42,6 +42,11 @@ public class Main extends Application {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        try {
+            addr = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         Client client = null;
         client = new Client(addr,
                 5400,

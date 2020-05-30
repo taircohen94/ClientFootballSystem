@@ -1,5 +1,6 @@
 package Controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import sun.awt.windows.ThemeReader;
 
 import java.io.IOException;
+import java.util.concurrent.*;
 
 public class LoginController extends Controller{
 
@@ -79,49 +81,84 @@ public class LoginController extends Controller{
     }
 
     private void start(){
-        Thread one = new Thread(() -> {
-            try {
-                while(true) {
-                    System.out.println("Does it work?");
-                    notificationFromServer();
-                    Thread.sleep(10000);
-                    System.out.println("Nope, it doesnt...again.");
-                }
-            } catch(InterruptedException v) {
-                System.out.println(v);
+        new Thread() {
+            public void run() {
+                //Do some stuff in another thread
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        StringBuilder ans = notificationFromServer();
+                        if(ans != null) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setContentText(ans.toString());
+                            alert.showAndWait();
+                        }
+                    }
+                });
             }
-        });
-        one.start();
+        }.start();
+
+
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println("Does it work?");
+//                        notificationFromServer();
+//                        System.out.println("Nope, it doesnt...again.");
+//
+//                    }
+//                },
+//                5000
+//        );
+//        Thread one = new Thread(() -> {
+//            try {
+//                while(true) {
+//                    System.out.println("Does it work?");
+//                    notificationFromServer();
+//                    Thread.sleep(1000000);
+//                    System.out.println("Nope, it doesnt...again.");
+//                }
+//            } catch(InterruptedException v) {
+//                System.out.println(v);
+//            }
+//        });
+//        one.start();
 
 //        new Thread(() -> {
 //            notificationFromServer();
 //        }).start();
     }
 
-    private void notificationFromServer() {
+    private StringBuilder notificationFromServer() {
         System.out.println("notificationFromServer");
         String ans = client.checkNotification();
-        System.out.println(ans);
+        System.out.println("answer is: "+ ans);
         String[] array;
         if (ans != null) {
             array = ans.split(",");
             if (array[0].equals("Ok")) {
-                showNotification(array);
+                return showNotification(array);
             }
         }
+        return null;
     }
 
-    private void showNotification(String [] notifications) {
+    private StringBuilder showNotification(String [] notifications) {
         StringBuilder stringBuilder = new StringBuilder();
+        int count = 0;
         for (int i = 1; i < notifications.length; i++) {
+            count++;
+            if(count == 4){
+                count = 0;
+                continue;
+            }
             stringBuilder.append(notifications[i]);
-            if(i % 4 == 0){
+            stringBuilder.append(" ");
+                if(i % 3 == 0){
                 stringBuilder.append("\n");
             }
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(stringBuilder.toString());
-        alert.showAndWait();
+        return stringBuilder;
     }
 
 }
