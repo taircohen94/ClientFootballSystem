@@ -1,7 +1,10 @@
 package Controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +12,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sun.awt.windows.ThemeReader;
 
 import java.io.IOException;
 import java.util.concurrent.*;
 
-public class LoginController extends Controller{
+public class LoginController extends Controller {
 
 
     @FXML
@@ -80,18 +84,29 @@ public class LoginController extends Controller{
         stage.showAndWait();
     }
 
-    private void start(){
+    private void start() {
         new Thread() {
             public void run() {
                 //Do some stuff in another thread
                 Platform.runLater(new Runnable() {
                     public void run() {
-                        StringBuilder ans = notificationFromServer();
-                        if(ans != null) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setContentText(ans.toString());
-                            alert.showAndWait();
-                        }
+
+                        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(60), new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                StringBuilder ans = notificationFromServer();
+                                if(ans !=null){
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setContentText(ans.toString());
+                                    alert.show();
+                                }
+                                //System.out.println("bitch betterA");
+                            }
+                        }));
+                        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+                        fiveSecondsWonder.play();
+
                     }
                 });
             }
@@ -132,7 +147,7 @@ public class LoginController extends Controller{
     private StringBuilder notificationFromServer() {
         System.out.println("notificationFromServer");
         String ans = client.checkNotification();
-        System.out.println("answer is: "+ ans);
+        System.out.println("answer is: " + ans);
         String[] array;
         if (ans != null) {
             array = ans.split(",");
@@ -143,18 +158,18 @@ public class LoginController extends Controller{
         return null;
     }
 
-    private StringBuilder showNotification(String [] notifications) {
+    private StringBuilder showNotification(String[] notifications) {
         StringBuilder stringBuilder = new StringBuilder();
         int count = 0;
         for (int i = 1; i < notifications.length; i++) {
             count++;
-            if(count == 4){
+            if (count == 4) {
                 count = 0;
                 continue;
             }
             stringBuilder.append(notifications[i]);
             stringBuilder.append(" ");
-                if(i % 3 == 0){
+            if (i % 3 == 0) {
                 stringBuilder.append("\n");
             }
         }
