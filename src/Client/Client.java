@@ -196,7 +196,6 @@ public class Client {
         try {
             Socket theServer = new Socket(serverIP, serverPort);
             StringBuilder req = getStringBuilder(teamName, seasonYear, coachUserName, coachFirstName, coachLastName, "editCoachDetails,");
-            req.append(",");
             req.append(training);
             req.append(",");
             req.append(role);
@@ -226,16 +225,28 @@ public class Client {
     private StringBuilder getStringBuilder(String teamName, String seasonYear, String teamPropUserName, String teamPropFirstName, String teamPropLastName, String s) {
         StringBuilder req = new StringBuilder();
         req.append(s);
-        req.append(",");
         req.append(teamName);
         req.append(",");
         req.append(seasonYear);
         req.append(",");
         req.append(teamPropUserName);
         req.append(",");
-        req.append(teamPropFirstName);
-        req.append(",");
-        req.append(teamPropLastName);
+        if(teamPropFirstName.isEmpty()){
+            req.append("null");
+            req.append(",");
+        }
+        else {
+            req.append(teamPropFirstName);
+            req.append(",");
+        }
+        if(teamPropLastName.isEmpty()){
+            req.append("null");
+            req.append(",");
+        }
+        else {
+            req.append(teamPropLastName);
+            req.append(",");
+        }
         return req;
     }
 
@@ -244,6 +255,7 @@ public class Client {
         try {
             Socket theServer = new Socket(serverIP, serverPort);
             StringBuilder req = getStringBuilder(teamName, seasonYear, playerUserName, playerFirstName, playerLastName, "editPlayerDetails,");
+            req.append(role);
             clientStrategy.setRequest(req);
             ans = clientStrategy.clientStrategy(theServer.getInputStream(), theServer.getOutputStream());
             theServer.close();
@@ -389,6 +401,4 @@ public class Client {
         }
         return ans;
     }
-
-
 }

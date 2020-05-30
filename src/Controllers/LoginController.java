@@ -7,16 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import sun.awt.windows.ThemeReader;
-
-import java.io.IOException;
-import java.util.concurrent.*;
 
 public class LoginController extends Controller {
 
@@ -143,6 +138,7 @@ public class LoginController extends Controller {
 //            notificationFromServer();
 //        }).start();
     }
+
 
     private StringBuilder notificationFromServer() {
         System.out.println("notificationFromServer");
