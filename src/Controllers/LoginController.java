@@ -1,15 +1,17 @@
 package Controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.util.Duration;
 
 public class LoginController extends Controller {
 
@@ -73,38 +75,101 @@ public class LoginController extends Controller {
         controller = loader.getController();
         controller.init(fanByUserName);
         // showAndWait will block execution until the window closes...
-        stage.showAndWait();
         start();
+        stage.showAndWait();
     }
 
-    public void start(){
-        new Thread(() -> {
-            notificationFromServer();
-        }).start();
+    private void start() {
+        new Thread() {
+            public void run() {
+                //Do some stuff in another thread
+                Platform.runLater(new Runnable() {
+                    public void run() {
+
+                        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(60), new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                StringBuilder ans = notificationFromServer();
+                                if(ans !=null){
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setContentText(ans.toString());
+                                    alert.show();
+                                }
+                                //System.out.println("bitch betterA");
+                            }
+                        }));
+                        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+                        fiveSecondsWonder.play();
+
+                    }
+                });
+            }
+        }.start();
+
+
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println("Does it work?");
+//                        notificationFromServer();
+//                        System.out.println("Nope, it doesnt...again.");
+//
+//                    }
+//                },
+//                5000
+//        );
+//        Thread one = new Thread(() -> {
+//            try {
+//                while(true) {
+//                    System.out.println("Does it work?");
+//                    notificationFromServer();
+//                    Thread.sleep(1000000);
+//                    System.out.println("Nope, it doesnt...again.");
+//                }
+//            } catch(InterruptedException v) {
+//                System.out.println(v);
+//            }
+//        });
+//        one.start();
+
+//        new Thread(() -> {
+//            notificationFromServer();
+//        }).start();
     }
 
-    private void notificationFromServer() {
+
+    private StringBuilder notificationFromServer() {
+        System.out.println("notificationFromServer");
         String ans = client.checkNotification();
+        System.out.println("answer is: " + ans);
         String[] array;
         if (ans != null) {
             array = ans.split(",");
             if (array[0].equals("Ok")) {
-                showNotification(array);
+                return showNotification(array);
             }
         }
-}
+        return null;
+    }
 
-    private void showNotification(String [] notifications) {
+    private StringBuilder showNotification(String[] notifications) {
         StringBuilder stringBuilder = new StringBuilder();
+        int count = 0;
         for (int i = 1; i < notifications.length; i++) {
+            count++;
+            if (count == 4) {
+                count = 0;
+                continue;
+            }
             stringBuilder.append(notifications[i]);
-            if(i % 4 == 0){
+            stringBuilder.append(" ");
+            if (i % 3 == 0) {
                 stringBuilder.append("\n");
             }
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(stringBuilder.toString());
-        alert.showAndWait();
+        return stringBuilder;
     }
 
 }
