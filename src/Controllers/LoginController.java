@@ -74,6 +74,37 @@ public class LoginController extends Controller {
         controller.init(fanByUserName);
         // showAndWait will block execution until the window closes...
         stage.showAndWait();
+        start();
+    }
+
+    public void start(){
+        new Thread(() -> {
+            notificationFromServer();
+        }).start();
+    }
+
+    private void notificationFromServer() {
+        String ans = client.checkNotification();
+        String[] array;
+        if (ans != null) {
+            array = ans.split(",");
+            if (array[0].equals("Ok")) {
+                showNotification(array);
+            }
+        }
+}
+
+    private void showNotification(String [] notifications) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i < notifications.length; i++) {
+            stringBuilder.append(notifications[i]);
+            if(i % 4 == 0){
+                stringBuilder.append("\n");
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(stringBuilder.toString());
+        alert.showAndWait();
     }
 
 }

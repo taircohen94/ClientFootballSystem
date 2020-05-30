@@ -12,6 +12,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.TextField?>
 <?import Controllers.RequiredField?>
+<?import Controllers.ErrorLabel?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagePolicyController">
    <left>
       <AnchorPane prefHeight="625.0" prefWidth="1000.0" styleClass="root" stylesheets="@common-styles.css" BorderPane.alignment="CENTER">
@@ -22,12 +23,12 @@
                   <AnchorPane layoutY="275.0" prefHeight="10.0" prefWidth="950.0" styleClass="container-footer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
 
 
-                  <Text fill="WHITE" layoutX="378.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a policy">
+                  <Text fill="WHITE" layoutX="278.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a policy">
                      <font>
                         <Font name="Calibri Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Button layoutX="378.0" layoutY="200.0" prefHeight="25.0" prefWidth="179.0" styleClass="button-green" text="Apply">
+                  <Button layoutX="278.0" layoutY="230.0" prefHeight="25.0" prefWidth="219.0" onAction="#clickOnAssignGamePolicy" styleClass="button-green" text="Apply">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
@@ -37,7 +38,7 @@
                         <Font name="Calibri Bold" size="51.0" />
                      </font>
                   </Text>
-                  <ComboBox fx:id="cmbVehicleType2" layoutX="381.0" layoutY="55.0" prefHeight="25.0" prefWidth="177.0" promptText="policy" styleClass="combo-box" >
+                  <ComboBox fx:id="cmbPolicyType" layoutX="278.0" layoutY="95.0" prefHeight="25.0" prefWidth="177.0" promptText="Policy" styleClass="combo-box" >
                   <items>
                      <FXCollections fx:factory="observableArrayList">
                         <String fx:value="Classic Score Policy" />
@@ -47,21 +48,8 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
-                  <TextField fx:id="leagueName" layoutX="381.0" layoutY="100.0" prefHeight="31.0" prefWidth="134.0" promptText="League Name" />
-                  <TextField fx:id="season" layoutX="381.0" layoutY="150.0" prefHeight="31.0" prefWidth="134.0" promptText="Year" />
-                  <fx:define>
-                     <RequiredField fx:id="requiredField1" >
-                        <srcControl>
-                           <fx:reference source="leagueName"/>
-                        </srcControl>
-                     </RequiredField>
-                     <RequiredField fx:id="requiredField2" >
-                        <srcControl>
-                           <fx:reference source="season"/>
-                        </srcControl>
-                     </RequiredField>
-                  </fx:define>
-
+                  <ComboBox fx:id="cmbLeagueType" layoutX="278.0" layoutY="140.0" prefHeight="25.0" prefWidth="177.0" promptText="League" styleClass="combo-box" />
+                  <ComboBox fx:id="cmbSeasonType" layoutX="278.0" layoutY="185.0" prefHeight="25.0" prefWidth="177.0" promptText="Season" styleClass="combo-box" />
                   <Text fill="WHITE" layoutX="660.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Well, the choice is in your hands. Control the Score or the Scheduling policy just in one click. " textAlignment="CENTER" wrappingWidth="175.40325927734375">
                      <font>
                         <Font name="Calibri Bold" size="17.0" />
@@ -69,6 +57,44 @@
                   </Text>
 
                </children>
+
+               <fx:define>
+
+                  <RequiredField fx:id="requiredField1" >
+                     <srcControl>
+                        <fx:reference source="cmbLeagueType"/>
+                     </srcControl>
+                  </RequiredField>
+                  <RequiredField fx:id="requiredField2" >
+                     <srcControl>
+                        <fx:reference source="cmbSeasonType"/>
+                     </srcControl>
+                  </RequiredField>
+                  <RequiredField fx:id="requiredField3" >
+                     <srcControl>
+                        <fx:reference source="cmbPolicyType"/>
+                     </srcControl>
+                  </RequiredField>
+               </fx:define>
+
+               <ErrorLabel layoutX="460.0" layoutY="160.0" message="Please select a league" styleClass="first-error">
+                  <validator>
+                     <fx:reference source="requiredField1"/>
+                  </validator>
+               </ErrorLabel>
+
+               <ErrorLabel layoutX="460.0" layoutY="200.0" message="Please select a season" styleClass="first-error">
+                  <validator>
+                     <fx:reference source="requiredField2"/>
+                  </validator>
+               </ErrorLabel>
+
+               <ErrorLabel layoutX="460.0" layoutY="120.0" message="Please choose a policy" styleClass="first-error">
+                  <validator>
+                     <fx:reference source="requiredField3"/>
+                  </validator>
+               </ErrorLabel>
+
             </AnchorPane>
             <Text fill="WHITE" layoutX="404.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POLICY MANAGEMENT">
                <font>
