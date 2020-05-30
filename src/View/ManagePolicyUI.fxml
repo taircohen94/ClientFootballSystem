@@ -48,7 +48,7 @@
                      </FXCollections>
                   </items>
                   </ComboBox>
-                  <ComboBox fx:id="cmbLeagueType" layoutX="278.0" layoutY="140.0" prefHeight="25.0" prefWidth="177.0" promptText="League" styleClass="combo-box" />
+                  <ComboBox fx:id="cmbLeagueType" onAction="#setSeasonType" layoutX="278.0" layoutY="140.0" prefHeight="25.0" prefWidth="177.0" promptText="League" styleClass="combo-box" />
                   <ComboBox fx:id="cmbSeasonType" layoutX="278.0" layoutY="185.0" prefHeight="25.0" prefWidth="177.0" promptText="Season" styleClass="combo-box" />
                   <Text fill="WHITE" layoutX="660.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Well, the choice is in your hands. Control the Score or the Scheduling policy just in one click. " textAlignment="CENTER" wrappingWidth="175.40325927734375">
                      <font>
