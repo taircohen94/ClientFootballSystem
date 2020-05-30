@@ -1,7 +1,7 @@
 
 import Client.Client;
 import Client.Strategies.ClientSender;
-import Controllers.*;
+import Controllers.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +16,7 @@ public class Main extends Application {
     static final String STYLE_SHEET = "View/common-styles.css";
     static Stage stg;
 
+    //start
     @Override
     public void start(Stage stage) throws Exception {
         this.stg = stage;
