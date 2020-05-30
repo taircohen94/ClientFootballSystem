@@ -90,6 +90,7 @@ public class ManagePolicyController extends Controller {
                 alert.setContentText(ans);
                 alert.showAndWait();
             }
-        } }
+        }
+    }
 }
 
