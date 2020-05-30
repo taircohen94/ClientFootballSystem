@@ -96,20 +96,20 @@ public class ManagePolicyController extends Controller {
             }
         }
 
-//        ans = client.getAllSeasons();
-//        String[] array1;
-//        if (ans != null) {
-//            array1 = ans.split(",");
-//            if (array1[0].equals("Ok")) {
-//                for (int i = 1; i < array1.length; i++) {
-//                    this.cmbSeasonType.getItems().add(array1[i]);
-//                }
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setContentText(ans);
-//                alert.showAndWait();
-//            }
-//        }
+        ans = client.getAllSeasons();
+        String[] array1;
+        if (ans != null) {
+            array1 = ans.split(",");
+            if (array1[0].equals("Ok")) {
+                for (int i = 1; i < array1.length; i++) {
+                    this.cmbSeasonType.getItems().add(array1[i]);
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(ans);
+                alert.showAndWait();
+            }
+        }
 
     }
 
