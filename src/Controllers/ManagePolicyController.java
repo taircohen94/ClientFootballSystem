@@ -60,6 +60,10 @@ public class ManagePolicyController extends Controller {
 
     }
 
+<<<<<<<<< Temporary merge branch 1
+
+    public void init() {
+=========
 
     public void init() {
         String ans = client.getAllLeagues();
@@ -91,6 +95,7 @@ public class ManagePolicyController extends Controller {
                 alert.showAndWait();
             }
         }
+>>>>>>>>> Temporary merge branch 2
     }
 
 }
