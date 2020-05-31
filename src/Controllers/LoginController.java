@@ -145,7 +145,7 @@ public class LoginController extends Controller {
         String ans = client.checkNotification();
         System.out.println("answer is: " + ans);
         String[] array;
-        if (ans != null) {
+        if (ans != null && !ans.equals("None")) {
             array = ans.split(",");
             if (array[0].equals("Ok")) {
                 return showNotification(array);
