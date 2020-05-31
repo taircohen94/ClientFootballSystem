@@ -35,7 +35,6 @@ public class Main extends Application {
         int x = 132;
         byte y = (byte) x;
         byte[] ipAddr = new byte[] { y, 72, 65 ,88 };
-
         InetAddress addr = null;
         try {
             addr = InetAddress.getByAddress(ipAddr);
